@@ -2,75 +2,18 @@
   <section class="section">
     <div class="tile is-ancestor">
       <div class="tile is-parent">
-        <article class="tile is-child notification is-default">
-          <p class="title">Keep</p>
-          <p class="subtitle">What is good that you did?</p>
-
-          <post-content kpt-type="keep"></post-content>
-
-          <nav class="panel">
-            <div v-for="(row, index) in keep_content" v-bind:key="index">
-              <a class="panel-block">
-                <!-- <span class="panel-icon">
-                  <input type="checkbox">
-                </span> -->
-                {{ row.text }}
-
-                <div class="stars">
-                  <span v-if="row.star > 0" class="tag is-primary is-rounded">
-                    <small><i v-for="(s, i) in row.star" v-bind:key="i" class="fa fa-star-o"></i></small>
-                  </span>
-                </div>
-              </a>
-            </div>
-          </nav>
-        </article>
-        <article class="tile is-child notification is-default">
-          <p class="title">Problem</p>
-          <p class="subtitle">What is bad?</p>
-
-          <post-content kpt-type="problem"></post-content>
-
-          <nav class="panel">
-            <div v-for="(row, index) in problem_content" v-bind:key="index">
-              <a class="panel-block">
-                <!-- <span class="panel-icon">
-                  <input type="checkbox">
-                </span> -->
-                {{ row.text }}
-
-                <div class="stars">
-                  <span v-if="row.star > 0" class="tag is-primary is-rounded">
-                    <small><i v-for="(s, i) in row.star" v-bind:key="i" class="fa fa-star-o"></i></small>
-                  </span>
-                </div>
-              </a>
-            </div>
-          </nav>
-        </article>
-        <article class="tile is-child notification is-default">
-          <p class="title">Try</p>
-          <p class="subtitle">What do you want to improve for next time?</p>
-
-          <post-content kpt-type="try"></post-content>
-
-          <nav class="panel">
-            <div v-for="(row, index) in try_content" v-bind:key="index">
-              <a class="panel-block">
-                <!-- <span class="panel-icon">
-                  <input type="checkbox">
-                </span> -->
-                {{ row.text }}
-
-                <div class="stars">
-                  <span v-if="row.star > 0" class="tag is-primary is-rounded">
-                    <small><i v-for="(s, i) in row.star" v-bind:key="i" class="fa fa-star-o"></i></small>
-                  </span>
-                </div>
-              </a>
-            </div>
-          </nav>
-        </article>
+        <kpt-panel 
+          v-bind:board_name="boardKey" 
+          v-bind:kpt_type_name="'keep'" 
+          v-bind:content_list="keep_content_list"></kpt-panel>
+        <kpt-panel 
+          v-bind:board_name="boardKey" 
+          v-bind:kpt_type_name="'problem'" 
+          v-bind:content_list="problem_content_list"></kpt-panel>
+        <kpt-panel 
+          v-bind:board_name="boardKey" 
+          v-bind:kpt_type_name="'try'" 
+          v-bind:content_list="try_content_list"></kpt-panel>
       </div>
     </div>
 
@@ -78,59 +21,44 @@
 </template>
 
 <script>
-import PostContent from '~/components/PostContent.vue'
+import KptPanel from '~/components/KptPanel.vue'
+import firebase from "~/plugins/firebase"
 
 export default {
   components: {
-    PostContent
+    KptPanel
   },
-  data: function(){
+  mounted: function(){
+    // console.table(this.$route.query)
+    this.boards = [];
+    var boardsRef = firebase.database().ref("boards/" + this.$route.query.id);
+    // var boardsRef = firebase.database().ref(this.$route.path);
+    boardsRef.on("value", function(snapshot){
+      if (snapshot.val().keep_content_list != undefined){
+        this.keep_content_list = snapshot.val().keep_content_list;
+      }
+      if (snapshot.val().problem_content_list != undefined){
+        this.problem_content_list = snapshot.val().problem_content_list;
+      }
+      if (snapshot.val().try_content_list != undefined){
+        this.try_content_list = snapshot.val().try_content_list;
+      }
+    }.bind(this));
+  },
+  computed: {
+    boardKey: function(){
+      // return this.$route.params.key;
+      return "params.key"
+    }
+  },
+  data(){
     return {
-      keep_content: [
-        { text: "コードを書いた", star: 0 },
-        { text: "他のメンバーとコミュニケーションが取れた", star: 4 },
-        { text: "ライブラリの使い方が分かった、理解できていなかった部分が理解できた", star: 2 },
-        { text: "初めてNuxtを触った。案外使いやすい", star: 1 },
-      ],
-      problem_content: [
-        { text: "遅刻した", star: 1 },
-      ],
-      try_content: [
-        { text: "予習をしてくる", star: 2 },
-        { text: "次回はLTする", star: 0 }
-      ]
+      title: "",
+      keep_content_list: {},
+      problem_content_list: {},
+      try_content_list: {}
     }
   },
-  methods: {
-    onPost: function(){
-      alert("pos!")
-    }
-  }
+  layout: ["board"]
 }
 </script>
-
-<style scoped>
-article {
-  background-color:#ffff;
-  border: 1px solid lightgray;
-}
-article.tile {
-  margin: 10px !important;
-  padding: 15px 15px;
-}
-.subtitle {
-  font-size: 1rem;
-}
-.notification a:not(.button) {
-  text-decoration: none;
-}
-a:hover {
-  border-left: 2px solid;
-  border-left-color: #00d1b2;
-}
-.panel-block {
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
-}
-</style>

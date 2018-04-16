@@ -23,6 +23,7 @@
           <tr v-for="(key, index) in Object.keys(boards)" v-bind:key="index">
             <th><a @click="goBoardPage(key)"><i class="fa fa-table fa-1"></i>  {{ boards[key].title }}</a></th>
             <th><small>{{ parseTimestamp(boards[key].timestamp) }}</small></th>
+            <!-- <th><span class="icon is-small" @click="deleteBoard(key)"><i class="fa fa-trash"></i></span></th> -->
           </tr>
         </tbody>
       </table>
@@ -70,7 +71,7 @@ export default {
     },
     goBoardPage(key){
       // boardレイアウト側でタイトルを表示したいので、vue-routerのqueryパラムにタイトルを入れて渡す
-      this.$router.push({path: "/boards/" + key, query: { title: this.boards[key].title } });
+      this.$router.push({path: "/board", params: {id: key}, query: {id: key, title: this.boards[key].title} });
     }
   }
 }
