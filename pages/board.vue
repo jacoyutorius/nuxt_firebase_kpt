@@ -29,11 +29,13 @@ export default {
     KptPanel
   },
   mounted: function(){
-    // console.table(this.$route.query)
     this.boards = [];
     var boardsRef = firebase.database().ref("boards/" + this.$route.query.id);
-    // var boardsRef = firebase.database().ref(this.$route.path);
     boardsRef.on("value", function(snapshot){
+      if (snapshot.val() == null){
+         this.$router.push("/")
+      }
+
       if (snapshot.val().keep_content_list != undefined){
         this.keep_content_list = snapshot.val().keep_content_list;
       }
