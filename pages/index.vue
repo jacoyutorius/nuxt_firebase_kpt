@@ -71,7 +71,7 @@ export default {
     },
     goBoardPage(key){
       // boardレイアウト側でタイトルを表示したいので、vue-routerのqueryパラムにタイトルを入れて渡す
-      this.$router.push({path: "/board", params: {id: key}, query: {id: key, title: this.boards[key].title} });
+      this.$router.push({path: "/board/", query: {id: key, title: this.boards[key].title} });
     }
   }
 }
