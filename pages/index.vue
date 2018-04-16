@@ -23,7 +23,6 @@
           <tr v-for="(key, index) in Object.keys(boards)" v-bind:key="index">
             <th><a @click="goBoardPage(key)"><i class="fa fa-table fa-1"></i>  {{ boards[key].title }}</a></th>
             <th><small>{{ parseTimestamp(boards[key].timestamp) }}</small></th>
-            <th><span class="icon is-small" @click="deleteBoard(key)"><i class="fa fa-trash"></i></span></th>
           </tr>
         </tbody>
       </table>
