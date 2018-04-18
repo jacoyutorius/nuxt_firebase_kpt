@@ -49,8 +49,7 @@ export default {
   },
   computed: {
     boardKey: function(){
-      // return this.$route.params.key;
-      return "params.key"
+      return this.$route.query.id;
     }
   },
   data(){
