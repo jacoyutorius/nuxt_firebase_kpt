@@ -3,7 +3,8 @@
     <section id="new_board" class="section">
       <div class="field">
         <div class="control has-icons-left has-icons-right">
-          <input class="input is-large" type="text" v-model="boardTitle" placeholder="input new Board name.">
+          <input class="input is-large" v-bind:class="errorActive ? 'is-danger' : ''" type="text" v-model="boardTitle" placeholder="input new Board name.">
+          <p v-if="errorActive" class="help is-danger">{{ errorMessage }}</p>
           <span class="icon is-small is-left">
             <i class="fa fa-table"></i>
           </span>
@@ -38,7 +39,13 @@ export default {
   data: function(){
     return {
       boardTitle: "",
-      boards: {}
+      boards: {},
+      errorMessage: ""
+    }
+  },
+  computed: {
+    errorActive: function(){
+      return this.errorMessage.length > 0
     }
   },
   mounted: function(){
@@ -53,6 +60,11 @@ export default {
       return String(new Date(timestamp));
     },
     createBoard() {
+      if (this.boardTitle.length <= 0){
+        this.errorMessage = "タイトルを入力してください！"
+        return;
+      }
+
       var key = firebase.database().ref().child('boards').push().key;
       firebase.database().ref("boards/" + key).set({
         title: this.boardTitle,
