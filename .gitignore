@@ -15,3 +15,5 @@ dist
 
 # ruby gems
 .bundle
+
+.firebaserc
