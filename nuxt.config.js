@@ -2,6 +2,14 @@ const webpack = require('webpack')
 
 module.exports = {
   mode: "spa",
+  env: {
+    apiKey: process.env.APIKEY,
+    authDomain: process.env.AUTHDOMAIN,
+    databaseURL: process.env.DATABASEURL,
+    projectId: process.env.PROJECTID,
+    storageBucket: process.env.STORAGEBUCKET,
+    messagingSenderId: process.env.MESSAGINGSENDERID
+  },
   /*
   ** Headers of the page
   */
