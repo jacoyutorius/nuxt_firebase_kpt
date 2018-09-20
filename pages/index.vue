@@ -52,7 +52,13 @@ export default {
     this.boards = [];
     var boardsRef = firebase.database().ref("boards");
     boardsRef.on("value", function(snapshot){
-      this.boards = snapshot.val();
+      // 更新日の降順にするためにreverseする
+      this.boards = Object.keys(snapshot.val())
+        .reverse()
+        .reduce((obj, key)=>{ 
+          obj[key] = snapshot.val()[key];
+          return obj;
+          }, {});
     }.bind(this));
   },
   methods: {
