@@ -23,7 +23,7 @@ yarn dev
 事前にs3_websiteをインストールしておく。
 
 ```
-npm run generate
+yarn generate
 bundle exec s3_website push
 ```
 
@@ -33,6 +33,6 @@ bundle exec s3_website push
 事前にFirebase CLIをインストールしておく。
 
 ```
-npm run generate
+yarn generate
 firebase deploy
 ```
