@@ -63,7 +63,14 @@ export default {
   },
   methods: {
     parseTimestamp(timestamp) {
-      return String(new Date(timestamp));
+      const d = new Date(timestamp);
+      const week = "日月火水木金土";
+
+      const hours = String(d.getHours()).padStart(2, "0");
+      const minutes = String(d.getMinutes()).padStart(2, "0");
+      const seconds = String(d.getSeconds()).padStart(2, "0");
+
+      return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}(${week[d.getDay()]})  ${hours}:${minutes}:${seconds}`;
     },
     createBoard() {
       if (this.boardTitle.length <= 0){
