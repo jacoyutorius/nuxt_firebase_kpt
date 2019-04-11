@@ -23,6 +23,7 @@ yarn dev
 事前にs3_websiteをインストールしておく。
 
 ```
+source .env
 yarn generate
 bundle exec s3_website push
 ```
