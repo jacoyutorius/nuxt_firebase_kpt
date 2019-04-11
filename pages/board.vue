@@ -17,16 +17,20 @@
       </div>
     </div>
 
+    <!-- tools -->
+    <BoardTools></BoardTools>
   </section>
 </template>
 
 <script>
 import KptPanel from '~/components/KptPanel.vue'
 import firebase from "~/plugins/firebase"
+import BoardTools from "~/components/BoardTools.vue"
 
 export default {
   components: {
-    KptPanel
+    KptPanel,
+    BoardTools
   },
   mounted: function(){
     this.boards = [];
@@ -63,3 +67,9 @@ export default {
   layout: ["board"]
 }
 </script>
+
+<style scoped>
+.section {
+  padding: 1rem 1.5rem;
+}
+</style>
