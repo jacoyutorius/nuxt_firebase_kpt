@@ -5,10 +5,16 @@
         <div class="navbar-item">
           <div class="buttons">
             <a class="button is-normal is-primary is-outlined" @click="showQrCode">
-              <i class="fa fa-qrcode">QR Code</i>
+              <span class="icon">
+                <i class="fa fa-qrcode"></i>
+              </span>
+              <span>QR Code</span>
             </a>
-            <a class="button is-normal is-primary is-outlined" @click="exportBoard(key)">
-              <i class="fa fa-download">Download</i>
+            <a class="button is-normal is-primary is-outlined" @click="exportBoard">
+              <span class="icon">
+                <i class="fa fa-download"></i>
+              </span>
+              <span>Download</span>
             </a>
           </div>
         </div>
