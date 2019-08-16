@@ -4,21 +4,40 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-normal is-primary is-outlined" @click="exportBoard(key)">
-              <i class="fa fa-download">Download</i>
+            <a class="button is-normal is-primary is-outlined" @click="showQrCode">
+              <span class="icon">
+                <i class="fa fa-qrcode"></i>
+              </span>
+              <span>QR Code</span>
+            </a>
+            <a class="button is-normal is-primary is-outlined" @click="exportBoard">
+              <span class="icon">
+                <i class="fa fa-download"></i>
+              </span>
+              <span>Download</span>
             </a>
           </div>
         </div>
       </div>
+      <current-url-qr-code v-if="showsQrCode" @click="hideQrCode"/>
     </div>
   </nav>
 </template>
 
 <script>
 import firebase from "~/plugins/firebase";
+import CurrentUrlQrCode from "./CurrentUrlQrCode.vue"
 
 export default {
   name: "BoardTools",
+  components: {CurrentUrlQrCode},
+
+  data() {
+    return {
+      showsQrCode: false
+    }
+  },
+
   methods: {
     buildMarkdown(data) {
       return [
@@ -46,6 +65,7 @@ export default {
         [`# ${data.title}`]
       );
     },
+
     exportBoard() {
       const boardRef = firebase
         .database()
@@ -66,6 +86,14 @@ export default {
           obj.click();
         }
       });
+    },
+
+    showQrCode() {
+      this.showsQrCode = true;
+    },
+
+    hideQrCode() {
+      this.showsQrCode = false;
     }
   }
 };

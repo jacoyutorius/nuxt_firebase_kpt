@@ -8,7 +8,8 @@ module.exports = {
     databaseURL: process.env.DATABASEURL,
     projectId: process.env.PROJECTID,
     storageBucket: process.env.STORAGEBUCKET,
-    messagingSenderId: process.env.MESSAGINGSENDERID
+    messagingSenderId: process.env.MESSAGINGSENDERID,
+    appId: process.env.APPIP
   },
   /*
   ** Headers of the page

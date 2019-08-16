@@ -9,8 +9,8 @@ Nuxt.js + Firebase で作ったKPTボード。
 ## Setup
 
 ``` bash
-yarn add
-mv .env_base .env # set Firebase API key
+yarn install
+mv .env_default .env # set Firebase API key
 source .env
 yarn dev
 ```

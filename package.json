@@ -19,6 +19,7 @@
     "dotenv": "^4.0.0",
     "firebase": "^4.9.0",
     "nuxt": "^1.0.0",
+    "qrcode": "^1.4.1",
     "vuexfire": "^2.3.0"
   },
   "devDependencies": {
